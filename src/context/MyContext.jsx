@@ -11,7 +11,7 @@ const MyContextProvider = ({children}) => {
     const [isModal, setIsModal] = useState([]);
   
     useEffect(() => {
-      fetch("https://course-api.com/javascript-store-products")
+      fetch("https://6484af52ee799e321626edfe.mockapi.io/api/v1/products")
         .then((response) => response.json())
         .then((data) => {
           setData(data);

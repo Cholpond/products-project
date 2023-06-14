@@ -19,7 +19,6 @@ const App = () => {
       
       <Routes>
         <Route path='/cart' element={<Cart/>}/>
-        <Route path="/" element={<CardComponent />}/>
         <Route path="/:id" element={<ProductDetails/>}/>
         <Route path="/" element={<Homepage/>}/>
         <Route path="/checkout" element={<CheckoutForm/>}/>
