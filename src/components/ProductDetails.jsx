@@ -1,36 +1,38 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { MyContext } from "../context/MyContext";
-import { useParams, Link} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
+const ProductDetails = ({ item }) => {
+  const { data, addToCart } = useContext(MyContext);
+  const params = useParams();
 
-const ProductDetails = ({item}) => {
-    const {data,  updateData, addToCart} = useContext(MyContext);
-    const id = useParams()
-    const fetchData = () => {
-        fetch(`https://course-api.com/javascript-store-single-product?id=${id.id}`)
-        .then((res) => res.json())
-    .then((data) =>  updateData(data))
-       
+  let selectedProduct;
+
+  for (let item of data) {
+    if (item.id === params.id) {
+      selectedProduct = item;
     }
+  }
 
-useEffect(() => {
-fetchData()
-}, [])
+  //   Destructure selectedProduct object
+  const {
+    fields: { name, price, colors, description, image },
+    id,
+  } = selectedProduct;
 
-
-
-    return(
-        <div className="singleProduct">
-        <img src={data?.fields?.image[0].url}/>
-        <div className="productDescription">
-        <h2>{ data?.fields?.name}</h2>
-        <h5>{ data?.fields?.price}</h5>
-        <p>{data?.fields?.colors}</p>
-        <p>{ data?.fields?.description}</p>
-        <button onClick={()=>addToCart()}>Add to Cart</button>
-        </div>
+  return (
+    <div className="singleProduct">
+      <img alt={id} src={image[0].url} />
+      <div className="productDescription">
+        <h2>{name}</h2>
+        <h5>{price}</h5>
+        {/* You don't need the line below, since colors is an array */}
+        {/* <p>{data?.fields?.colors}</p> */}
+        <p>{description}</p>
+        <button onClick={() => addToCart(selectedProduct)}>Add to Cart</button>
+      </div>
     </div>
-)
-}
+  );
+};
 
-export default ProductDetails; 
+export default ProductDetails;
